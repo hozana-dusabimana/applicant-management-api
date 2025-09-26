@@ -1,0 +1,267 @@
+{
+    "info": {
+      "name": "Job Tracker API",
+      "description": "A simple job applicant tracking system built with Go, Fiber, PostgreSQL, and Redis",
+      "version": "1.0.0",
+      "contact": {
+        "name": "Developer",
+        "email": "dev@example.com"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Development server"
+      },
+      {
+        "url": "http://localhost:8081",
+        "description": "KrakenD Gateway"
+      }
+    ],
+    "paths": {
+      "/health": {
+        "get": {
+          "summary": "Health Check",
+          "description": "Check if the service is running",
+          "responses": {
+            "200": {
+              "description": "Service is healthy",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "status": "healthy",
+                    "service": "job-tracker",
+                    "version": "1.0.0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/applicants": {
+        "get": {
+          "summary": "Get all applicants",
+          "description": "Retrieve a paginated list of all applicants",
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Page number",
+              "required": false,
+              "schema": {
+                "type": "integer",
+                "default": 1
+              }
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "Number of items per page",
+              "required": false,
+              "schema": {
+                "type": "integer",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of applicants",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "data": [
+                      {
+                        "id": 1,
+                        "name": "John Doe",
+                        "email": "john@example.com",
+                        "position": "Software Engineer",
+                        "status": "pending",
+                        "phone": "+1234567890",
+                        "created_at": "2024-01-01T00:00:00Z"
+                      }
+                    ],
+                    "page": 1,
+                    "limit": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new applicant",
+          "description": "Add a new job applicant to the system",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["name", "email", "position"],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Full name of the applicant"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address"
+                    },
+                    "position": {
+                      "type": "string",
+                      "description": "Job position applied for"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["pending", "reviewed", "interviewed", "hired", "rejected"],
+                      "default": "pending"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "description": "Phone number (optional)"
+                    },
+                    "resume": {
+                      "type": "string",
+                      "description": "Resume text (optional)"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Additional notes (optional)"
+                    }
+                  }
+                },
+                "example": {
+                  "name": "Jane Smith",
+                  "email": "jane@example.com",
+                  "position": "Frontend Developer",
+                  "phone": "+1987654321",
+                  "notes": "Has 3 years of React experience"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Applicant created successfully"
+            },
+            "400": {
+              "description": "Invalid input data"
+            },
+            "409": {
+              "description": "Email already exists"
+            }
+          }
+        }
+      },
+      "/applicants/{id}": {
+        "get": {
+          "summary": "Get applicant by ID",
+          "description": "Retrieve a specific applicant by their ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "Applicant ID",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Applicant details"
+            },
+            "404": {
+              "description": "Applicant not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update applicant",
+          "description": "Update an existing applicant's information",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "Applicant ID",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "position": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["pending", "reviewed", "interviewed", "hired", "rejected"]
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "resume": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Applicant updated successfully"
+            },
+            "404": {
+              "description": "Applicant not found"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete applicant",
+          "description": "Remove an applicant from the system",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "Applicant ID",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Applicant deleted successfully"
+            },
+            "404": {
+              "description": "Applicant not found"
+            }
+          }
+        }
+      }
+    }
+  }
+  

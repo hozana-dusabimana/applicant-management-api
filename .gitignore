@@ -1,0 +1,74 @@
+# Compiled binaries and executables
+main
+main.exe
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go test files and coverage
+*.test
+*.out
+coverage.txt
+coverage.html
+
+# Go workspace and modules
+go.work
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Operating system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Log files
+*.log
+logs/
+
+# Environment and configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+config.local.yaml
+config.local.yml
+config.local.json
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+dump.rdb
+
+# Temporary and build files
+tmp/
+temp/
+build/
+dist/
+bin/
+*.tmp
+*.bak
+*.backup
+
+# Docker
+.dockerignore
+
+# Frontend dependencies (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database process files
+*.pid
