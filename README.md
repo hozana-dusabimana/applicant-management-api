@@ -2,6 +2,8 @@
 
 A modern, scalable job applicant management system built with Go, demonstrating enterprise-level architecture patterns and best practices.
 
+**🔗 Repository**: [https://github.com/hozana-dusabimana/applicant-management-api](https://github.com/hozana-dusabimana/applicant-management-api)
+
 ## 🏗️ Architecture Overview
 
 This system implements a microservices architecture with API Gateway pattern, featuring:
@@ -174,8 +176,8 @@ pending → reviewed → interviewed → hired/rejected
 ### Quick Start
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd job_tracker
+git clone https://github.com/hozana-dusabimana/applicant-management-api.git
+cd applicant-management-api
 
 # Start all services
 docker compose up --build -d
@@ -332,11 +334,13 @@ docker compose -f docker-compose.prod.yml up -d
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
+1. Fork the [repository](https://github.com/hozana-dusabimana/applicant-management-api)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
 4. Add tests if applicable
-5. Submit a pull request
+5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
 ## 📄 License
 
